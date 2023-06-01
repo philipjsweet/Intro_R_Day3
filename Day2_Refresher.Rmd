@@ -1,0 +1,119 @@
+---
+title: "Day_refresher"
+author: "Philip Sweet"
+date: "2023-05-31"
+output: html_document
+---
+
+## Day one Refresher 
+
+Here we will repeat some basic R concepts learned on Day 1
+
+We're going to 
+
+1. Set up a plot using ggplot(data, aes(x = , y = , color =))
+
+2. Add a shape: geom_boxplot, geom_point, geom_tile
+
+3. Specify a color: scale scale_color_XXX
+
+4. Add costume lables: ylab, xlab, ggtitle
+
+5. change the text of the graph: theme(axis.text.x , legend.position = "bottom")
+
+```{r summary of data}
+
+library(tidyverse)
+
+str(mpg)
+
+## seperate by class
+
+ggplot(mpg, aes(x = manufacturer, group = class)) +
+  geom_bar(position = position_dodge()) 
+
+## flip coord
+
+ggplot(mpg, aes(x = manufacturer, group = class)) +
+  geom_bar(position = position_dodge()) +
+  coord_flip()
+
+## color by class
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_dodge()) +
+  coord_flip()
+
+## stack'em 1
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = "fill") +
+  coord_flip()
+
+## stack'em 2
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip()
+
+## apply an exisiting color guide 
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_colorblind()
+
+## define your own colors by name
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("red","green","blue","yellow","orange","black","grey"))
+
+## define your own colors by code
+
+# https://www.color-hex.com/
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("#fa8072","#283482","#878586","#fbc424","#e6007d","#00a898","#75529d"))
+
+
+
+## make all text bigger
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("#fa8072","#283482","#878586","#fbc424","#e6007d","#00a898","#75529d")) +
+  theme(text = element_text(size = 20))  
+
+## Specifically make the axis text bigger
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("#fa8072","#283482","#878586","#fbc424","#e6007d","#00a898","#75529d")) +
+  theme(axis.text = element_text(size = 20))  
+
+## move legend to bottom 
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("#fa8072","#283482","#878586","#fbc424","#e6007d","#00a898","#75529d")) +
+  theme(axis.text = element_text(size = 20),
+        legend.position = "bottom")   
+
+## add labels
+
+ggplot(mpg, aes(x = manufacturer, fill = class)) +
+  geom_bar(position = position_fill()) +
+  coord_flip() +
+  scale_fill_manual(values=c("#fa8072","#283482","#878586","#fbc424","#e6007d","#00a898","#75529d")) +
+  theme(axis.text = element_text(size = 20),
+        legend.position = "bottom")  +
+  xlab("Production by Class") +
+  ggtitle("Car Production by Company")
+
+```
+
